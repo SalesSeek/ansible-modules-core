@@ -224,7 +224,7 @@ def get_instance_info(inst):
     else:
         disk_names = []
     return({
-        'image': not inst.image is None and inst.image.split('/')[-1] or None,
+        'image': inst.image is not None and inst.image.split('/')[-1] or None,
         'disks': disk_names,
         'machine_type': inst.size,
         'metadata': metadata,
