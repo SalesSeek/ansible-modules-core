@@ -190,14 +190,14 @@ try:
         ResourceExistsError, ResourceInUseError, ResourceNotFoundError
     _ = Provider.GCE
 except ImportError:
-    print("failed=True " + \
+    print("failed=True " +
           "msg='libcloud withGCE support (0.13.3+) required for this module'")
     sys.exit(1)
 
 try:
     from ast import literal_eval
 except ImportError:
-    print("failed=True " + \
+    print("failed=True " +
           "msg='GCE module requires python's 'ast' module, python v2.6+'")
     sys.exit(1)
 
@@ -326,7 +326,7 @@ def create_instances(module, gce, instance_names):
         except ResourceExistsError:
             inst = gce.ex_get_node(name, lc_zone)
         except GoogleBaseError, e:
-            module.fail_json(msg='Unexpected error attempting to create ' + \
+            module.fail_json(msg='Unexpected error attempting to create ' +
                              'instance %s, error: %s' % (name, e.value))
 
         for i, lc_disk in enumerate(lc_disks):
