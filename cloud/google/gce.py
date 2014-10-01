@@ -188,6 +188,7 @@ EXAMPLES = '''
 import sys
 
 try:
+    import libcloud
     from libcloud.compute.types import Provider
     from libcloud.compute.providers import get_driver
     from libcloud.common.google import GoogleBaseError, QuotaExceededError, \
@@ -301,10 +302,13 @@ def create_instances(module, gce, instance_names):
             print("failed=True msg='bad metadata syntax'")
             sys.exit(1)
 
+    if hasattr(libcloud, '__version__') and libcloud.__version__ < '0.15':
         items = []
         for k, v in md.items():
             items.append({"key": k, "value": v})
         metadata = {'items': items}
+    else:
+        metadata = md
 
     # These variables all have default values but check just in case
     if not lc_image or not lc_network or not lc_machine_type or not lc_zone:
