@@ -91,7 +91,10 @@ options:
     aliases: []
   disks:
     description:
-      - a list of persistent disks to attach to the instance; a string value gives the name of the disk; alternatively, a dictionary value can define 'name' and 'mode' ('READ_ONLY' or 'READ_WRITE'). The first entry will be the boot disk (which must be READ_WRITE).
+      - a list of persistent disks to attach to the instance; a string value
+        gives the name of the disk; alternatively, a dictionary value can
+        define 'name' and 'mode' ('READ_ONLY' or 'READ_WRITE'). The first entry
+        will be the boot disk (which must be READ_WRITE).
     required: false
     default: null
     aliases: []
@@ -154,7 +157,8 @@ EXAMPLES = '''
   tasks:
     - name: Launch instances
       local_action: gce instance_names={{names}} machine_type={{machine_type}}
-                    image={{image}} zone={{zone}} service_account_email={{ service_account_email }}
+                    image={{image}} zone={{zone}}
+                    service_account_email={{ service_account_email }}
                     pem_file={{ pem_file }} project_id={{ project_id }}
       register: gce
     - name: Wait for SSH to come up
