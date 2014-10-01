@@ -294,10 +294,10 @@ def create_instances(module, gce, instance_names):
             md = literal_eval(metadata)
             if not isinstance(md, dict):
                 raise ValueError('metadata must be a dict')
-        except ValueError, e:
+        except ValueError as e:
             print("failed=True msg='bad metadata: %s'" % str(e))
             sys.exit(1)
-        except SyntaxError, e:
+        except SyntaxError as e:
             print("failed=True msg='bad metadata syntax'")
             sys.exit(1)
 
@@ -329,7 +329,7 @@ def create_instances(module, gce, instance_names):
             changed = True
         except ResourceExistsError:
             inst = gce.ex_get_node(name, lc_zone)
-        except GoogleBaseError, e:
+        except GoogleBaseError as e:
             module.fail_json(msg='Unexpected error attempting to create ' +
                              'instance %s, error: %s' % (name, e.value))
 
@@ -387,7 +387,7 @@ def terminate_instances(module, gce, instance_names, zone_name):
             inst = gce.ex_get_node(name, zone_name)
         except ResourceNotFoundError:
             pass
-        except Exception, e:
+        except Exception as e:
             module.fail_json(msg=unexpected_error_msg(e), changed=False)
         if inst:
             gce.destroy_node(inst)
