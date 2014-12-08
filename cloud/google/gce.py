@@ -291,16 +291,19 @@ def create_instances(module, gce, instance_names):
     # with:
     # [ {'key': key1, 'value': value1}, {'key': key2, 'value': value2}, ...]
     if metadata:
-        try:
-            md = literal_eval(metadata)
-            if not isinstance(md, dict):
-                raise ValueError('metadata must be a dict')
-        except ValueError as e:
-            print("failed=True msg='bad metadata: %s'" % str(e))
-            sys.exit(1)
-        except SyntaxError as e:
-            print("failed=True msg='bad metadata syntax'")
-            sys.exit(1)
+        if isinstance(metadata, dict):
+            md = metadata
+        else:
+            try:
+                md = literal_eval(metadata)
+                if not isinstance(md, dict):
+                    raise ValueError('metadata must be a dict')
+            except ValueError as e:
+                print("failed=True msg='bad metadata: %s'" % str(e))
+                sys.exit(1)
+            except SyntaxError as e:
+                print("failed=True msg='bad metadata syntax'")
+                sys.exit(1)
 
     if hasattr(libcloud, '__version__') and libcloud.__version__ < '0.15':
         items = []
